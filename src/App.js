@@ -12,11 +12,8 @@ function App() {
   useEffect(() => {
     
     function fn(event) {
-      if (!stOn) {
-        setStOn(true);
-      }
- 
-      arr.push(JSON.parse(event.data));
+          setStOn(true);
+          arr.push(JSON.parse(event.data));
       setLast(v=>v+1)
     }
 
