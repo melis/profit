@@ -44,3 +44,7 @@ th {
 .activeTr {
   background-color: yellow !important;
 }
+
+.activeTr:hover {
+  color: black;
+}

@@ -15,7 +15,7 @@ function App() {
       if (!stOn) {
         setStOn(true);
       }
-      // console.log(event.data)
+ 
       arr.push(JSON.parse(event.data));
       setLast(v=>v+1)
     }
@@ -32,6 +32,8 @@ function App() {
       socket.removeEventListener("message", fn);
     };
   }, [on, arr]);
+
+
 
   useEffect(() => {
     let summ = 0;
@@ -118,7 +120,13 @@ function App() {
 
         <tbody>
           {list.map((el,i) => (
-            <tr key={el.id}      onClick={()=>{
+            <tr key={el.id} className={`${el.active?'activeTr': ''}`}
+            onClick={()=>{
+             let arr=[...list];
+             arr.forEach((l,i)=>{
+              if(l.id===el.id) arr[i].active=!l.active
+             })
+             setList(arr)
             }}>
               <td>{el.id}</td>
               <td>{el.mean}</td>
