@@ -6,21 +6,28 @@ function App() {
   const [list, setList] = useState([]);
   const [on, setOn] = useState(false);
   const [stOn, setStOn] = useState(false);
+  const [last, setLast]=useState(0)
   let arr = useMemo(() => [], []);
 
   useEffect(() => {
+    
     function fn(event) {
       if (!stOn) {
         setStOn(true);
       }
+      // console.log(event.data)
       arr.push(JSON.parse(event.data));
+      setLast(v=>v+1)
     }
+
     const socket = new WebSocket(
       "wss://trade.trademux.net:8800/?password=1234"
     );
+
     if (on) {
       socket.addEventListener("message", fn);
     }
+
     return () => {
       socket.removeEventListener("message", fn);
     };
@@ -60,16 +67,17 @@ function App() {
           otk,
           len: data.length,
           median,
+          active: false
         },
       ]);
     }
   }, [data]);
+
   return (
     <div className="App">
       <div className="panel">
         <button
           onClick={(e) => {
-            console.log(e);
             setOn(true);
           }}
           disabled={on}
@@ -93,23 +101,25 @@ function App() {
         >
           Очистит статистику
         </button>
+        <span>Количество: {last}</span>
       </div>
 
       <table>
         <thead>
           <tr>
             <th>LAST ID</th>
-            <th> Среднее значение: </th>
-            <th>Отклонение:</th>
-            <th>Медиана:</th>
+            <th> Среднее значение</th>
+            <th>Отклонение</th>
+            <th>Медиана</th>
             <th>Моду</th>
             <th>Количество записей</th>
           </tr>
         </thead>
 
         <tbody>
-          {list.map((el) => (
-            <tr key={el.id}>
+          {list.map((el,i) => (
+            <tr key={el.id}      onClick={()=>{
+            }}>
               <td>{el.id}</td>
               <td>{el.mean}</td>
               <td>{el.otk}</td>

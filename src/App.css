@@ -15,6 +15,7 @@ button {
 }
 button:disabled {
   background-color: silver;
+  cursor: auto;
 }
 tr {
   transition: 0.5s;
@@ -39,4 +40,7 @@ td,
 th {
   padding: 15px;
   text-align: center;
+}
+.activeTr {
+  background-color: yellow !important;
 }
